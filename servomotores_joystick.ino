@@ -77,9 +77,9 @@ GradoServoMuneca = mover_servo(servoMuneca, GradoServoMuneca, ValorX2, pinJoyX2)
 */
 int mover_servo(Servo nombre_servo, int  grado_servo, int potenciometro, int entradaAnalogica ) {
   potenciometro  = analogRead(entradaAnalogica);
-  if (millis() - tiempo >= 15)
+  if (millis() - tiempo >= 5)
   {
-    tiempo += 15;
+    tiempo += 5;
     if (analogRead(entradaAnalogica) > 520 && grado_servo < 180) {
       grado_servo ++;
       nombre_servo.write(grado_servo);
