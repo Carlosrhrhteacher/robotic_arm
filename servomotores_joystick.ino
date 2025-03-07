@@ -1,4 +1,4 @@
-// Icluimos librería servo.
+                                                                                                                                                             // Icluimos librería servo.
 #include <Servo.h>
  
 //JOTSTICK 1
@@ -42,7 +42,7 @@ void setup() {
   servoBase.attach(2); // se coloca el servo en el pin 2, será nuestro servo del eje de abcisas
   servoBase.write(90);
   servoHombro.attach(3); // se coloca el servo en el pin 3, será nuestro servo del eje de ordenadas 
-  servoHombro.write(90);
+  servoHombro.write(0);
   delay(300);
  
   
@@ -57,7 +57,7 @@ void setup() {
  
 void loop() {
   //Crearemos una función para el funcionamiento de los servos, de tal forma que solo tendremos que declarar las llamadas de cada servoa la funcion.
-//Llamadas a la funcion de los servos que funcionaran con nuestro Joystick 1
+  //Llamadas a la funcion de los servos que funcionaran con nuestro Joystick 1
   GradoServoBase = mover_servo(servoBase, GradoServoBase, ValorY, pinJoyY);
   GradoServoHombro = mover_servo(servoHombro, GradoServoHombro, ValorX, pinJoyX);
 //Llamadas a la funcion de los servos que funcionaran con nuestro Joystick 2
