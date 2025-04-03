@@ -1,96 +1,87 @@
-                                                                                                                                                             // Icluimos librería servo.
 #include <Servo.h>
- 
-//JOTSTICK 1
-// Deaclaramos valores x e y joystick 1 y variables para x e y joystick 1
-const int pinJoyX = A0; //declaramos el eje x del joystick
-const int pinJoyY = A1; //declaramos el eje y del joystick
-int ValorX;
-int ValorXs ;
-int ValorY;
-int ValorYs ;
-//Declaramos los servos qur funcionaran con el joystick 1 
-Servo servoBase;
-Servo servoHombro;
-int GradoServoBase;
-int GradoServoHombro;
- 
- 
-//JOYSTICK 2
-// Declaramos valores x e y joystick 2 y variables para x e y joystick 2
-const int pinJoyX2 = A3; //declaramos el eje x para el joystick 2
-const int pinJoyY2 = A2; //declaramos el eje y para el  joystick 2
-int ValorX2;
-int ValorXs2;
-int ValorY2;
-int ValorYs2;
-//Declaramos los servos que funcionarán con el joystick 2
-Servo servoCodo;
-Servo servoMuneca;
-int GradoServoCodo;
-int GradoServoMuneca;
- 
- 
-//declaramos variables necesarias para crear la funcion.
-unsigned long tiempo = millis();
-boolean reinicio = false;
-int pausa = 30;
- 
- 
+
+// JOYSTICK 1
+// Declaramos pines y variables para el Joystick 1
+const int pinJoyX = A0; // Pin analógico para el eje X del Joystick 1
+const int pinJoyY = A1; // Pin analógico para el eje Y del Joystick 1
+int ValorX; // Variable para almacenar el valor del eje X del Joystick 1
+int ValorXs; // Variable sin usar en el código actual
+int ValorY; // Variable para almacenar el valor del eje Y del Joystick 1
+int ValorYs; // Variable sin usar en el código actual
+
+// Servos controlados por el Joystick 1
+Servo servoBase; // Servo para la base del brazo robótico
+Servo servoHombro; // Servo para el hombro del brazo robótico
+int GradoServoBase; // Grados del servo de la base
+int GradoServoHombro; // Grados del servo del hombro
+
+// JOYSTICK 2
+// Declaramos pines y variables para el Joystick 2
+const int pinJoyX2 = A3; // Pin analógico para el eje X del Joystick 2
+const int pinJoyY2 = A2; // Pin analógico para el eje Y del Joystick 2
+int ValorX2; // Variable para almacenar el valor del eje X del Joystick 2
+int ValorXs2; // Variable sin usar en el código actual
+int ValorY2;// Variable para almacenar el valor del eje Y del Joystick 2
+int ValorYs2; // Variable sin usar en el código actual
+
+// Servos controlados por el Joystick 2
+Servo servoCodo; // Servo para el codo del brazo robótico
+Servo servoMuneca; // Servo para la muñeca del brazo robótico
+Servo servoGiro; //-
+int GradoServoCodo; // Grados del servo del codo
+int GradoServoMuneca; // Grados del servo de la muñeca
+int GradoServoGiro; // Grados del servo que gira
+
+// Variables para la función mover_servo
+unsigned long tiempo = millis(); // Tiempo actual en milisegundos
+boolean reinicio = false; // Variable sin usar en el código actual
+int pausa = 30; // Variable sin usar en el código actual
+
 void setup() {
-  //Declaramos posiciones iniciales Joistick 1
-  servoBase.attach(2); // se coloca el servo en el pin 2, será nuestro servo del eje de abcisas
-  servoBase.write(90);
-  servoHombro.attach(3); // se coloca el servo en el pin 3, será nuestro servo del eje de ordenadas 
-  servoHombro.write(0);
-  delay(300);
- 
-  
-  //Declaramos posiciones iniciales Joistick 2
-  servoCodo.attach(4); // se coloca el servo en el pin 4, será nuestro servo del eje de abcisas
-  servoCodo.write(90);
-  servoMuneca.attach(5);  // se coloca el servo en el pin 5, será nuestro servo del eje de ordenadas 
-  servoMuneca.write(90);
-  delay(300);
- 
+  // Inicialización de los servos y posiciones iniciales
+  servoBase.attach(2); // Asigna el servo de la base al pin 2
+  servoBase.write(90); // Posición inicial del servo de la base
+
+  servoHombro.attach(3); // Asigna el servo del hombro al pin 3
+  servoHombro.write(0); // Posición inicial del servo del hombro
+
+  servoCodo.attach(4); // Asigna el servo del codo al pin 4
+  servoCodo.write(90); // Posición inicial del servo del codo
+
+  servoMuneca.attach(5); // Asigna el servo de la muñeca al pin 5
+  servoMuneca.write(90); // Posición inicial del servo de la muñeca
+
+    servoGiro.attach(6); // Asigna el servo de la muñeca al pin 5
+  servoGiro.write(90); // Posición inicial del servo de la muñeca
+
+  delay(300); // Espera 300 milisegundos
 }
- 
+
 void loop() {
-  //Crearemos una función para el funcionamiento de los servos, de tal forma que solo tendremos que declarar las llamadas de cada servoa la funcion.
-  //Llamadas a la funcion de los servos que funcionaran con nuestro Joystick 1
+  // Control de los servos con los joysticks
   GradoServoBase = mover_servo(servoBase, GradoServoBase, ValorY, pinJoyY);
   GradoServoHombro = mover_servo(servoHombro, GradoServoHombro, ValorX, pinJoyX);
-//Llamadas a la funcion de los servos que funcionaran con nuestro Joystick 2
-GradoServoCodo = mover_servo(servoCodo, GradoServoCodo, ValorY2, pinJoyY2);
-GradoServoMuneca = mover_servo(servoMuneca, GradoServoMuneca, ValorX2, pinJoyX2);
- 
+  GradoServoCodo = mover_servo(servoCodo, GradoServoCodo, ValorY2, pinJoyY2);
+  GradoServoMuneca = mover_servo(servoMuneca, GradoServoMuneca, ValorX2, pinJoyX2);
+  GradoServoGiro = mover_servo(servoGiro, GradoServoGiro, ValorY2, pinJoyY2);
 }
- 
-//Creamos la funcion para el funcionamiento de nuestro servo.
-/*En primer lugar declaramos nuestro funcion, la cual tiene que ser tipo int. Esto debe a que sino no nos devuleve datos y sin este tipo
-* de funcion y la funcion return que se puede ver al final, nuestro codigo no modifica la variable general por lo que el código no funcionaria. 
-* El funcionamienyto basico del codigo es el siguiente:
-* Nuestra primera condición if mide el valor de nuestro reloj de arduino para entrar en la funcion. Despues declaramos nuestro tiempo otra vez en 
-* el valor inicial para que cuando se reinicie el bucle el codigo funcione.
-* La segunda condicion if dice que cuando se cumplan las condiciones de que el joystick este en los valores para mover el servo y siempre y 
-* cuando el valor del servo este entre 0 y 180 este suma o reste grados para que el servo se mueva hacia un lado o hacia otro.
-*/
-int mover_servo(Servo nombre_servo, int  grado_servo, int potenciometro, int entradaAnalogica ) {
-  potenciometro  = analogRead(entradaAnalogica);
-  if (millis() - tiempo >= 5)
-  {
+
+// Función para mover un servo según el joystick
+int mover_servo(Servo nombre_servo, int grado_servo, int potenciometro, int entradaAnalogica) {
+  potenciometro = analogRead(entradaAnalogica); // Lee el valor del joystick
+
+  if (millis() - tiempo >= 5) { // Controla la velocidad de movimiento
     tiempo += 5;
+
     if (analogRead(entradaAnalogica) > 520 && grado_servo < 180) {
-      grado_servo ++;
-      nombre_servo.write(grado_servo);
-    }
-    else {
-      if (analogRead(entradaAnalogica) < 480 && grado_servo > 0) {
-        grado_servo --;
-        nombre_servo.write(grado_servo);
-        reinicio = true;
-      }
+      grado_servo++; // Incrementa los grados del servo
+      nombre_servo.write(grado_servo); // Mueve el servo
+    } else if (analogRead(entradaAnalogica) < 480 && grado_servo > 0) {
+      grado_servo--; // Decrementa los grados del servo
+      nombre_servo.write(grado_servo); // Mueve el servo
+      reinicio = true; // Variable sin usar en el código actual
     }
   }
-  return (grado_servo);
+
+  return grado_servo; // Devuelve los grados del servo
 }
